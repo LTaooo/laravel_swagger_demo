@@ -29,8 +29,8 @@ class PageRequest extends JsonContent
     public static function getBaseProperties(): array
     {
         return [
-            new Property(property: 'page', type: 'integer', example: 1),
-            new Property(property: 'limit', type: 'integer', example: 10),
+            new Property(property: 'page', title: '页码', type: 'integer', example: 1),
+            new Property(property: 'limit', title: '每页数量', type: 'integer', example: 10),
         ];
     }
 

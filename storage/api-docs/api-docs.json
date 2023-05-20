@@ -121,8 +121,13 @@
                             "schema": {
                                 "properties": {
                                     "id": {
-                                        "title": "学生id",
-                                        "type": "integer"
+                                        "title": "数据id",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "rules": [
+                                            "integer",
+                                            "required"
+                                        ]
                                     }
                                 },
                                 "type": "object"
@@ -165,6 +170,22 @@
     },
     "components": {
         "schemas": {
+            "IdRequestDto": {
+                "title": "id参数",
+                "description": "id参数",
+                "properties": {
+                    "id": {
+                        "title": "数据id",
+                        "type": "integer",
+                        "example": 1,
+                        "rules": [
+                            "integer",
+                            "required"
+                        ]
+                    }
+                },
+                "type": "object"
+            },
             "StudentListRequestDto": {
                 "title": "学生列表请求",
                 "description": "列表请求参数",
@@ -214,17 +235,17 @@
                 "description": "班级信息",
                 "properties": {
                     "id": {
-                        "description": "班级id",
+                        "title": "班级id",
                         "type": "integer",
                         "example": 1
                     },
                     "name": {
-                        "description": "班级名字",
+                        "title": "班级名字",
                         "type": "string",
                         "example": "一班"
                     },
                     "created_at": {
-                        "description": "创建时间",
+                        "title": "创建时间",
                         "type": "integer",
                         "example": 1629782400
                     }
@@ -236,27 +257,27 @@
                 "description": "学生信息",
                 "properties": {
                     "id": {
-                        "description": "学生id",
+                        "title": "学生id",
                         "type": "integer",
                         "example": 1
                     },
                     "name": {
-                        "description": "学生名称",
+                        "title": "学生名称",
                         "type": "string",
                         "example": "张三"
                     },
                     "age": {
-                        "description": "学生年龄",
+                        "title": "学生年龄",
                         "type": "integer",
                         "example": 18
                     },
                     "class_id": {
-                        "description": "班级id",
+                        "title": "班级id",
                         "type": "integer",
                         "example": 1
                     },
                     "created_at": {
-                        "description": "学生创建时间",
+                        "title": "学生创建时间",
                         "type": "integer",
                         "example": 1629782400
                     }
@@ -284,7 +305,8 @@
     },
     "tags": [
         {
-            "name": "student"
+            "name": "student",
+            "description": "学生管理"
         }
     ]
 }
