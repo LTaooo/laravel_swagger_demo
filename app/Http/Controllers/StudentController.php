@@ -33,7 +33,7 @@ class StudentController
             ->when($studentListRequest->class_id, fn ($query) => $query->where('class_id', $studentListRequest->class_id))
             ->when($studentListRequest->name, fn ($query) => $query->where('name', 'like', "%{$studentListRequest->name}%"))
             ->paginate($studentListRequest->limit);
-        return PageResource::format(StudentWithClassResponseDto::collection($list));
+        return PageResource::format(StudentResponseDto::collection($list));
     }
 
     #[Get(classMethod: new ClassMethod(self::class, __FUNCTION__), description: '详情', tags: [self::TAG])]
