@@ -1,0 +1,290 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "swagger-test",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://baidu.com"
+        }
+    ],
+    "paths": {
+        "student/list": {
+            "get": {
+                "tags": [
+                    "student"
+                ],
+                "description": "列表",
+                "operationId": "5ebc65c48511cae3c926dc86e9c10fe7",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "page": {
+                                        "title": "页码",
+                                        "type": "integer",
+                                        "example": 10,
+                                        "rules": [
+                                            "integer",
+                                            "required"
+                                        ]
+                                    },
+                                    "limit": {
+                                        "title": "每页数量",
+                                        "type": "integer",
+                                        "example": 10,
+                                        "rules": [
+                                            "integer",
+                                            "required"
+                                        ]
+                                    },
+                                    "class_id": {
+                                        "title": "班级id",
+                                        "type": "integer",
+                                        "example": 1,
+                                        "rules": [
+                                            "min:1",
+                                            "filled",
+                                            "integer"
+                                        ]
+                                    },
+                                    "name": {
+                                        "title": "学生名字",
+                                        "type": "string",
+                                        "example": "张三",
+                                        "rules": [
+                                            "filled",
+                                            "string"
+                                        ]
+                                    }
+                                },
+                                "type": "object",
+                                "class_id": null,
+                                "name": null
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "code",
+                                            "type": "integer",
+                                            "enum": [
+                                                200,
+                                                400,
+                                                500
+                                            ]
+                                        },
+                                        "message": {
+                                            "description": "message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "list": {
+                                                    "$ref": "#/components/schemas/StudentResponseDto"
+                                                },
+                                                "total": {
+                                                    "description": "总数量",
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "student/detail": {
+            "get": {
+                "tags": [
+                    "student"
+                ],
+                "description": "详情",
+                "operationId": "9b804c2e2a01f655d502dba30da595b0",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "title": "学生id",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "code",
+                                            "type": "integer",
+                                            "enum": [
+                                                200,
+                                                400,
+                                                500
+                                            ]
+                                        },
+                                        "message": {
+                                            "description": "message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/StudentWithClassResponseDto"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "StudentListRequestDto": {
+                "title": "学生列表请求",
+                "description": "列表请求参数",
+                "properties": {
+                    "page": {
+                        "title": "页码",
+                        "type": "integer",
+                        "example": 10,
+                        "rules": [
+                            "integer",
+                            "required"
+                        ]
+                    },
+                    "limit": {
+                        "title": "每页数量",
+                        "type": "integer",
+                        "example": 10,
+                        "rules": [
+                            "integer",
+                            "required"
+                        ]
+                    },
+                    "class_id": {
+                        "title": "班级id",
+                        "type": "integer",
+                        "example": 1,
+                        "rules": [
+                            "min:1",
+                            "filled",
+                            "integer"
+                        ]
+                    },
+                    "name": {
+                        "title": "学生名字",
+                        "type": "string",
+                        "example": "张三",
+                        "rules": [
+                            "filled",
+                            "string"
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "ClassResponseDto": {
+                "title": "班级信息",
+                "description": "班级信息",
+                "properties": {
+                    "id": {
+                        "description": "班级id",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "班级名字",
+                        "type": "string",
+                        "example": "一班"
+                    },
+                    "created_at": {
+                        "description": "创建时间",
+                        "type": "integer",
+                        "example": 1629782400
+                    }
+                },
+                "type": "object"
+            },
+            "StudentResponseDto": {
+                "title": "学生信息",
+                "description": "学生信息",
+                "properties": {
+                    "id": {
+                        "description": "学生id",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "学生名称",
+                        "type": "string",
+                        "example": "张三"
+                    },
+                    "age": {
+                        "description": "学生年龄",
+                        "type": "integer",
+                        "example": 18
+                    },
+                    "class_id": {
+                        "description": "班级id",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "description": "学生创建时间",
+                        "type": "integer",
+                        "example": 1629782400
+                    }
+                },
+                "type": "object"
+            },
+            "StudentWithClassResponseDto": {
+                "title": "学生信息",
+                "description": "学生信息,包含班级信息",
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/StudentResponseDto"
+                    },
+                    {
+                        "properties": {
+                            "class": {
+                                "$ref": "#/components/schemas/ClassResponseDto"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "student"
+        }
+    ]
+}
