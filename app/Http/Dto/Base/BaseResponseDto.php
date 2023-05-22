@@ -5,12 +5,18 @@ namespace App\Http\Dto\Base;
 
 use App\Models\BaseModel;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use JsonSerializable;
 use ReflectionClass;
 
 class BaseResponseDto extends JsonResource
 {
-    public function toArray($request): array|\JsonSerializable|Arrayable
+    /**
+     * @param Request $request
+     * @return array<string, mixed>|JsonSerializable|Arrayable<string, mixed>
+     */
+    public function toArray($request): array|JsonSerializable|Arrayable
     {
         if (is_null($this->resource)) {
             return [];
@@ -18,7 +24,11 @@ class BaseResponseDto extends JsonResource
         return $this->toArrayFromProperty($request);
     }
 
-    private function toArrayFromProperty($request): array
+    /**
+     * @param Request $request
+     * @return array<string, mixed>
+     */
+    private function toArrayFromProperty(Request $request): array
     {
         $class = new ReflectionClass($this);
         $properties = $class->getProperties();

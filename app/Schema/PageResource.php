@@ -21,6 +21,10 @@ class PageResource extends JsonContent
         parent::__construct(properties: $properties);
     }
 
+    /**
+     * @param ResourceCollection $data
+     * @return array<string, mixed>
+     */
     public static function format(ResourceCollection $data): array
     {
         return [

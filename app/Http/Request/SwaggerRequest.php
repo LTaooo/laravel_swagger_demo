@@ -8,19 +8,21 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SwaggerRequest extends FormRequest
 {
+    /**
+     * @return array<string, array<string>|mixed>
+     */
     public function rules(): array
     {
         return [];
     }
 
     /**
-     * @template T
+     * @template T of BaseRequestDto
      * @param class-string<T> $class
      * @return T
      */
     public function toDto(string $class)
     {
-        /** @var BaseRequestDto|T $instance */
         $instance = new $class();
         $instance->fill($this);
         return $instance;

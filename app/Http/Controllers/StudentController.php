@@ -14,8 +14,6 @@ use App\Schema\BaseResource;
 use App\Schema\Component\ClassMethod;
 use App\Schema\Get;
 use App\Schema\PageResource;
-use App\Schema\Property;
-use OpenApi\Attributes\JsonContent;
 use OpenApi\Attributes\RequestBody;
 use OpenApi\Attributes\Tag;
 
@@ -24,6 +22,10 @@ class StudentController
 {
     public const TAG = 'student';
 
+    /**
+     * @param SwaggerRequest $request
+     * @return array<string, mixed>
+     */
     #[Get(classMethod: new ClassMethod(self::class, __FUNCTION__), description: '列表', tags: [self::TAG])]
     #[RequestBody(content: new StudentListRequestDto())]
     #[SuccessResponse(content: new PageResource(StudentResponseDto::class))]
@@ -31,12 +33,16 @@ class StudentController
     {
         $studentListRequest = $request->toDto(StudentListRequestDto::class);
         $list = Student::query()
-            ->when($studentListRequest->class_id, fn ($query) => $query->where('class_id', $studentListRequest->class_id))
-            ->when($studentListRequest->name, fn ($query) => $query->where('name', 'like', "%{$studentListRequest->name}%"))
+            ->when($studentListRequest->class_id, fn($query) => $query->where('class_id', $studentListRequest->class_id))
+            ->when($studentListRequest->name, fn($query) => $query->where('name', 'like', "%$studentListRequest->name%"))
             ->paginate($studentListRequest->limit);
         return PageResource::format(StudentResponseDto::collection($list));
     }
 
+    /**
+     * @param SwaggerRequest $request
+     * @return array<string, mixed>
+     */
     #[Get(classMethod: new ClassMethod(self::class, __FUNCTION__), description: '详情', tags: [self::TAG])]
     #[RequestBody(content: new IdRequestDto())]
     #[SuccessResponse(content: new BaseResource(StudentWithClassResponseDto::class, false))]
@@ -45,4 +51,5 @@ class StudentController
         $id = $request->toDto(IdRequestDto::class);
         return BaseResource::format(Student::find($id->id)->toDto());
     }
+
 }

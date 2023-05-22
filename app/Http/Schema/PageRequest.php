@@ -14,6 +14,8 @@ use ReflectionProperty;
 class PageRequest extends JsonContent
 {
     /**
+     * @template T of object
+     * @param class-string<T>|object|null $ref
      * @throws ReflectionException
      */
     public function __construct(string|object|null $ref = null)
@@ -26,6 +28,9 @@ class PageRequest extends JsonContent
         parent::__construct(properties: $properties);
     }
 
+    /**
+     * @return Property[]
+     */
     public static function getBaseProperties(): array
     {
         return [
@@ -35,7 +40,10 @@ class PageRequest extends JsonContent
     }
 
     /**
+     * @template T of object
+     * @param class-string<T>|object $ref
      * @throws ReflectionException
+     * @return Property[]
      */
     private function getRefProperties(string|object $ref): array
     {
