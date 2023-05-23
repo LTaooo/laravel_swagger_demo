@@ -16,18 +16,15 @@ use App\Schema\Get;
 use App\Schema\PageResource;
 use OpenApi\Attributes\RequestBody;
 use OpenApi\Attributes\Tag;
+use ReflectionException;
 
 #[Tag(self::TAG, description: '学生管理')]
 class StudentController
 {
     public const TAG = 'student';
 
-    /**
-     * @param SwaggerRequest $request
-     * @return array<string, mixed>
-     */
     #[Get(classMethod: new ClassMethod(self::class, __FUNCTION__), description: '列表', tags: [self::TAG])]
-    #[RequestBody(content: new StudentListRequestDto())]
+    #[\App\Schema\RequestBody(dtoClass: StudentListRequestDto::class)]
     #[SuccessResponse(content: new PageResource(StudentResponseDto::class))]
     public function list(SwaggerRequest $request): array
     {
@@ -40,15 +37,15 @@ class StudentController
     }
 
     /**
-     * @param SwaggerRequest $request
-     * @return array<string, mixed>
+     * @throws ReflectionException
      */
     #[Get(classMethod: new ClassMethod(self::class, __FUNCTION__), description: '详情', tags: [self::TAG])]
-    #[RequestBody(content: new IdRequestDto())]
+    #[\App\Schema\RequestBody(dtoClass: IdRequestDto::class)]
     #[SuccessResponse(content: new BaseResource(StudentWithClassResponseDto::class, false))]
     public function detail(SwaggerRequest $request): array
     {
-        $id = $request->toDto(IdRequestDto::class);
+        /** @var IdRequestDto $id */
+        $id = $request->autoToDto();
         return BaseResource::format(Student::find($id->id)->toDto());
     }
 

@@ -60,9 +60,7 @@
                                         ]
                                     }
                                 },
-                                "type": "object",
-                                "class_id": null,
-                                "name": null
+                                "type": "object"
                             }
                         }
                     }

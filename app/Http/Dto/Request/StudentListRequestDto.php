@@ -21,9 +21,4 @@ class StudentListRequestDto extends BaseRequestDto
 
     #[Property(property: 'name', title: '学生名字', type: 'string', example: '张三', rules: ['filled'])]
     public ?string $name = null;
-
-    public function __construct()
-    {
-        parent::__construct(properties: static::getRefProperties());
-    }
 }

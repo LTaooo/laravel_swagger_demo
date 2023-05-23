@@ -12,9 +12,4 @@ class IdRequestDto extends BaseRequestDto
 {
     #[Property(property: 'id', title: '数据id', type: 'integer', example: 1, required: true)]
     public int $id;
-
-    public function __construct()
-    {
-        parent::__construct(properties: static::getRefProperties());
-    }
 }

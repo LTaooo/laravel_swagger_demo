@@ -11,11 +11,11 @@ use OpenApi\Attributes\Property;
 #[Attribute(Attribute::TARGET_CLASS)]
 class PageResource extends JsonContent
 {
-    public function __construct(string $itemSchema)
+    public function __construct(string $dtoClass)
     {
         $properties = BaseResource::getBaseProperties();
         $properties[] = new Property(property: 'data', properties: [
-            new Property(property: 'list', ref: $itemSchema, title: '列表'),
+            new Property(property: 'list', ref: $dtoClass, title: '列表'),
             new Property(property: 'total', description: '总数量', type: 'integer'),
         ], type: 'object');
         parent::__construct(properties: $properties);

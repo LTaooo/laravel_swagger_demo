@@ -11,7 +11,7 @@ use OpenApi\Attributes\Property;
 #[Attribute(Attribute::TARGET_CLASS)]
 class BaseResource extends JsonContent
 {
-    public function __construct(string $itemSchema, bool $isArray)
+    public function __construct(string $dtoClass, bool $isArray)
     {
         $properties = static::getBaseProperties();
         $properties[] = $isArray ?
@@ -19,11 +19,11 @@ class BaseResource extends JsonContent
                 property: 'data',
                 description: '数据',
                 type: 'array',
-                items: new Items(ref: $itemSchema)
+                items: new Items(ref: $dtoClass)
             ) :
             new Property(
                 property: 'data',
-                ref: $itemSchema,
+                ref: $dtoClass,
                 description: '数据'
             );
         parent::__construct(properties: $properties);

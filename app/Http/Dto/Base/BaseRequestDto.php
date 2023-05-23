@@ -7,17 +7,21 @@ use App\Contract\RequestValidateInterface;
 use App\Schema\Property;
 use App\Traits\GetPropertySchema;
 use Illuminate\Foundation\Http\FormRequest;
-use OpenApi\Attributes\JsonContent;
-use OpenApi\Generator;
 use ReflectionClass;
+use ReflectionException;
 use RuntimeException;
 use Throwable;
 
-class BaseRequestDto extends JsonContent implements RequestValidateInterface
+class BaseRequestDto implements RequestValidateInterface
 {
     use GetPropertySchema;
 
-    public function fill(FormRequest $request): void
+    public function __construct(FormRequest $request)
+    {
+        $this->fill($request);
+    }
+
+    protected function fill(FormRequest $request): void
     {
         try {
             $result = $request->validate($this->rules(), $this->messages());
@@ -31,6 +35,9 @@ class BaseRequestDto extends JsonContent implements RequestValidateInterface
         }
     }
 
+    /**
+     * @throws ReflectionException
+     */
     public function rules(): array
     {
         $refProperties = static::getRefProperties();
