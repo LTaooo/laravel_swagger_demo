@@ -38,7 +38,7 @@ class BaseResponseDto extends JsonResource
             if (count($attributes) <= 0) {
                 continue;
             }
-            $value = $this->resource->{$property->name};
+            $value = $this->resource[$property->name];
             if ($value instanceof BaseModel) {
                 $value = $value->toDto()->toArray($request);
             } elseif ($value instanceof Arrayable) {

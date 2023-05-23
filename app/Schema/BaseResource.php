@@ -11,33 +11,26 @@ use OpenApi\Attributes\Property;
 #[Attribute(Attribute::TARGET_CLASS)]
 class BaseResource extends JsonContent
 {
-    public function __construct(string $dtoClass, bool $isArray)
+    public function __construct(string $dtoClass)
     {
         $properties = static::getBaseProperties();
-        $properties[] = $isArray ?
-            new Property(
-                property: 'data',
-                description: '数据',
-                type: 'array',
-                items: new Items(ref: $dtoClass)
-            ) :
-            new Property(
-                property: 'data',
-                ref: $dtoClass,
-                description: '数据'
-            );
+        $properties[] = new Property(
+            property: 'data',
+            ref: $dtoClass,
+            description: '数据'
+        );
         parent::__construct(properties: $properties);
     }
 
     public static function getBaseProperties(): array
     {
         return [
-            new Property(property: 'code', description: 'code', type: 'integer', enum: [200, 400, 500]),
-            new Property(property: 'message', description: 'message', type: 'string'),
+            new Property(property: 'code', description: 'code', type: 'integer', enum: [200, 400, 500], example: 200),
+            new Property(property: 'message', description: 'message', type: 'string', example: '请求成功'),
         ];
     }
 
-    public static function format(mixed $data): array
+    public static function format(mixed $data = null): array
     {
         return [
             'code' => 0,

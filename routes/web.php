@@ -21,4 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('student')->group(function () {
     Route::get('list', [StudentController::class, 'list']);
     Route::get('detail', [StudentController::class, 'detail']);
+    Route::get('add', [StudentController::class, 'add']);
+    Route::get('update', [StudentController::class, 'update']);
+    Route::get('delete', [StudentController::class, 'delete']);
 });

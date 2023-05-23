@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static static find(int|string $key)
+ * @method static static create(array $attributes = [])
  */
 abstract class BaseModel extends Model
 {
     protected $dateFormat = 'U';
 
-    public $timestamps = false;
+    public $timestamps = true;
     abstract function toDto(?string $className = null): BaseResponseDto;
 }

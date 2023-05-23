@@ -10,6 +10,8 @@ class Student extends BaseModel
 {
     protected $table = 'student';
 
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+
     function toDto(?string $className = null): StudentResponseDto
     {
         if (isset($className)) {

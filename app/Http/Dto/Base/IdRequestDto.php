@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Dto\Request;
+namespace App\Http\Dto\Base;
 
-use App\Http\Dto\Base\BaseRequestDto;
 use App\Schema\Property;
 use OpenApi\Attributes\Schema;
 

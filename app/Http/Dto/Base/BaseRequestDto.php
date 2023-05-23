@@ -6,15 +6,18 @@ namespace App\Http\Dto\Base;
 use App\Contract\RequestValidateInterface;
 use App\Schema\Property;
 use App\Traits\GetPropertySchema;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Foundation\Http\FormRequest;
 use ReflectionClass;
 use ReflectionException;
 use RuntimeException;
 use Throwable;
 
-class BaseRequestDto implements RequestValidateInterface
+class BaseRequestDto implements RequestValidateInterface, Arrayable
 {
     use GetPropertySchema;
+
+    private array $properties = [];
 
     public function __construct(FormRequest $request)
     {
@@ -24,14 +27,15 @@ class BaseRequestDto implements RequestValidateInterface
     protected function fill(FormRequest $request): void
     {
         try {
-            $result = $request->validate($this->rules(), $this->messages());
+            $params = $request->validate($this->rules(), $this->messages());
         } catch (Throwable $e) {
             throw new RuntimeException($e->getMessage());
         }
         $class = new ReflectionClass($this);
         $properties = $class->getProperties();
         foreach ($properties as $property) {
-            $property->setValue($this, $result[$property->getName()] ?? null);
+            $property->setValue($this, $params[$property->getName()] ?? null);
+            $this->properties[] = $property->getName();
         }
     }
 
@@ -56,5 +60,14 @@ class BaseRequestDto implements RequestValidateInterface
     public function messages(): array
     {
         return [];
+    }
+
+    public function toArray(): array
+    {
+        $data = [];
+        foreach ($this->properties as $property) {
+            $data[$property] = $this->{$property};
+        }
+        return $data;
     }
 }
